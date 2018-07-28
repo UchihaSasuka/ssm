@@ -11,20 +11,20 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/test"
+                        connectionURL="jdbc:mysql://localhost:3306/test2"
                         userId="root"
-                        password="123456789mmm"/>
+                        password="19961125"/>
 
-        <javaModelGenerator targetPackage="com.ssm.po" targetProject="src">
+        <javaModelGenerator targetPackage="com.ssm.po" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.ssm.generator.mapperxml" targetProject="src">
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.ssm.generator.mapperjava" targetProject="src" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.ssm.generator.xml" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -33,13 +33,16 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <table tableName="user" domainObjectName="User"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <!--<columnRenamingRule searchString="^D_"
-                                replaceString=""/>-->
-        </table>
+        <!--<table tableName="t_exam_strategy" domainObjectName="ExamStrategy"></table>
+        <table tableName="t_exam_topic" domainObjectName="ExamTopic"></table>-->
+        <table tableName="t_exam_topic_detail" domainObjectName="ExamTopicDetail"></table>
+        <!--<table tableName="t_knowledge" domainObjectName="Knowledge"></table>
+        <table tableName="t_knowledge_hierarchy" domainObjectName="KnowledgeHierarchy"></table>
+        <table tableName="t_question" domainObjectName="Question"></table>
+        <table tableName="t_question_bank" domainObjectName="QuestionBank"></table>
+        <table tableName="t_r_exam_strategy_and_question_bank" domainObjectName="ExamStrategyAndQuestionBank"></table>
+        <table tableName="t_r_question_and_knowledge" domainObjectName="QuestionAndKnowledge"></table>
+        <table tableName="t_r_question_bank_and_question" domainObjectName="QuestionBankAndQuestion"></table>-->
 
     </context>
 </generatorConfiguration>

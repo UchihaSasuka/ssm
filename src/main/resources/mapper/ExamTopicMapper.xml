@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.ExamTopicMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.po.ExamTopic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="strategy_id" property="strategyId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="question_type" property="questionType" jdbcType="TINYINT" />
+    <result column="question_count" property="questionCount" jdbcType="SMALLINT" />
+    <result column="single_score" property="singleScore" jdbcType="SMALLINT" />
+    <result column="sort_number" property="sortNumber" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, strategy_id, name, question_type, question_count, single_score, sort_number
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ssm.po.ExamTopicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_exam_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_exam_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_exam_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.po.ExamTopicExample" >
+    delete from t_exam_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.po.ExamTopic" >
+    insert into t_exam_topic (id, strategy_id, name,
+      question_type, question_count, single_score,
+      sort_number)
+    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{questionType,jdbcType=TINYINT}, #{questionCount,jdbcType=SMALLINT}, #{singleScore,jdbcType=SMALLINT},
+      #{sortNumber,jdbcType=TINYINT})
+  </insert>
+
+  <insert id="insertGetId" parameterType="com.ssm.po.ExamTopic" >
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() AS id;
+    </selectKey>
+    insert into t_exam_topic (id, strategy_id, name,
+    question_type, question_count, single_score,
+    sort_number)
+    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+    #{questionType,jdbcType=TINYINT}, #{questionCount,jdbcType=SMALLINT}, #{singleScore,jdbcType=SMALLINT},
+    #{sortNumber,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.po.ExamTopic" >
+    insert into t_exam_topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="strategyId != null" >
+        strategy_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="questionType != null" >
+        question_type,
+      </if>
+      <if test="questionCount != null" >
+        question_count,
+      </if>
+      <if test="singleScore != null" >
+        single_score,
+      </if>
+      <if test="sortNumber != null" >
+        sort_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="strategyId != null" >
+        #{strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        #{questionType,jdbcType=TINYINT},
+      </if>
+      <if test="questionCount != null" >
+        #{questionCount,jdbcType=SMALLINT},
+      </if>
+      <if test="singleScore != null" >
+        #{singleScore,jdbcType=SMALLINT},
+      </if>
+      <if test="sortNumber != null" >
+        #{sortNumber,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.po.ExamTopicExample" resultType="java.lang.Integer" >
+    select count(*) from t_exam_topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_exam_topic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.strategyId != null" >
+        strategy_id = #{record.strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionType != null" >
+        question_type = #{record.questionType,jdbcType=TINYINT},
+      </if>
+      <if test="record.questionCount != null" >
+        question_count = #{record.questionCount,jdbcType=SMALLINT},
+      </if>
+      <if test="record.singleScore != null" >
+        single_score = #{record.singleScore,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sortNumber != null" >
+        sort_number = #{record.sortNumber,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_exam_topic
+    set id = #{record.id,jdbcType=INTEGER},
+      strategy_id = #{record.strategyId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      question_type = #{record.questionType,jdbcType=TINYINT},
+      question_count = #{record.questionCount,jdbcType=SMALLINT},
+      single_score = #{record.singleScore,jdbcType=SMALLINT},
+      sort_number = #{record.sortNumber,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.po.ExamTopic" >
+    update t_exam_topic
+    <set >
+      <if test="strategyId != null" >
+        strategy_id = #{strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=TINYINT},
+      </if>
+      <if test="questionCount != null" >
+        question_count = #{questionCount,jdbcType=SMALLINT},
+      </if>
+      <if test="singleScore != null" >
+        single_score = #{singleScore,jdbcType=SMALLINT},
+      </if>
+      <if test="sortNumber != null" >
+        sort_number = #{sortNumber,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.po.ExamTopic" >
+    update t_exam_topic
+    set strategy_id = #{strategyId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=TINYINT},
+      question_count = #{questionCount,jdbcType=SMALLINT},
+      single_score = #{singleScore,jdbcType=SMALLINT},
+      sort_number = #{sortNumber,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

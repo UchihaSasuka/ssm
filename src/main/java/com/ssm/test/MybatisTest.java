@@ -1,7 +1,8 @@
 package com.ssm.test;
 
-import com.ssm.mapper.UserMapper;
-import com.ssm.po.User;
+import com.alibaba.fastjson.JSON;
+import com.ssm.controller.ExamController;
+import com.ssm.dto.ExamStrategyDto;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,11 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MybatisTest extends BaseTest{
 
     @Autowired
-    private UserMapper userMapper;
+    private ExamController examController;
 
     @Test
-    public void testMybatis(){
-        User user = userMapper.selectByPrimaryKey(1);
-        System.out.println(user.getName());
+    public void updateExamStartegy(){
+        //todo这里就没有写了，主要用的还是postman进行的测试
+        String json = "";
+        Integer id = 1;
+        ExamStrategyDto examStrategyDto = (ExamStrategyDto) JSON.parse(json);
+        examController.addExamStrategy(id, examStrategyDto);
     }
+
+
 }

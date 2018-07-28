@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.mapper.QuestionDtoMapper" >
+    
+    <resultMap id="map" type="com.ssm.dto.QuestionDto">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="knowledges" ofType="com.ssm.dto.QuestionKnowledge">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="questionCount" property="questionCount"/>
+        </collection>
+    </resultMap>
+
+    <select id="getQuestion" parameterType="Map" resultMap="map">
+        SELECT
+        e.id,
+        e.`name`,
+        d.id as knowledge_id,
+        d.name as knowledge_name,
+        count(c.question_id) as questionCount
+        FROM
+        t_question_bank a
+        LEFT JOIN t_r_question_bank_and_question b ON a.id = b.question_bank_id
+        LEFT JOIN t_r_question q ON b.question_id = q.id
+        LEFT JOIN t_r_question_and_knowledge c ON q.question_id = c.question_id
+        LEFT JOIN t_knowledge d ON c.knowledge_id = d.id
+        LEFT JOIN t_knowledge_hierarchy e ON d.knowledge_hierarchy_id = e.id
+        <where>
+            <if test="id != null">
+                a.id = #{id} AND
+            </if>
+            <if test="type != null">
+                q.question_type = #{type}
+            </if>
+        </where>
+        WHERE  GROUP BY c.knowledge_id
+    </select>
+
+    <!-- select
+	t.id,
+	t.`name`,
+	t.knowledge_id,
+	t.knowledge_name ,
+	count() from
+(SELECT
+	e.id as id ,
+	e.`name` as name,
+	d.id as knowledge_id,
+	d.name as knowledge_name,
+	c.question_id as question_id
+FROM
+	t_question_bank a
+	LEFT JOIN t_r_question_bank_and_question b ON a.id = b.question_bank_id
+
+	LEFT JOIN t_r_question_and_knowledge c ON b.question_id = c.question_id
+
+	LEFT JOIN t_knowledge d ON c.knowledge_id = d.id
+
+	LEFT JOIN t_knowledge_hierarchy e ON d.knowledge_hierarchy_id = e.id WHERE a.id = 1) t
+	LEFT JOIN  t_question q on t.question_id = q.id WHERE q.question_type =2-->
+</mapper>
